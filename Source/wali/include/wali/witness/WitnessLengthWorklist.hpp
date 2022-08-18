@@ -13,7 +13,7 @@ namespace wali
 {
   namespace witness
   {
-    struct ShorterThan : std::binary_function<const wfa::ITrans*, const wfa::ITrans*, bool>
+    struct ShorterThan : std::function<bool(const wfa::ITrans*, const wfa::ITrans*)>
     {
       bool operator()( const wfa::ITrans* a, const wfa::ITrans* b ) const
       {

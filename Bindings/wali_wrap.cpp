@@ -4830,7 +4830,7 @@ class PySemElem : public wali::SemElem {
 
 namespace std {
   template <>
-  struct less <PyObject *>: public binary_function<PyObject *, PyObject *, bool>
+  struct less <PyObject *>: public function<bool(PyObject *, PyObject *)>
   {
     bool
     operator()(PyObject * v, PyObject *w) const
@@ -4855,7 +4855,7 @@ namespace std {
   };
 
   template <>
-  struct less <swig::SwigPtr_PyObject>: public binary_function<swig::SwigPtr_PyObject, swig::SwigPtr_PyObject, bool>
+  struct less <swig::SwigPtr_PyObject>: public function<bool(swig::SwigPtr_PyObject, swig::SwigPtr_PyObject)>
   {
     bool
     operator()(const swig::SwigPtr_PyObject& v, const swig::SwigPtr_PyObject& w) const
@@ -4865,7 +4865,7 @@ namespace std {
   };
 
   template <>
-  struct less <swig::SwigVar_PyObject>: public binary_function<swig::SwigVar_PyObject, swig::SwigVar_PyObject, bool>
+  struct less <swig::SwigVar_PyObject>: public function<bool(swig::SwigVar_PyObject, swig::SwigVar_PyObject)>
   {
     bool
     operator()(const swig::SwigVar_PyObject& v, const swig::SwigVar_PyObject& w) const

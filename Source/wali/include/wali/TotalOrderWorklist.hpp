@@ -10,7 +10,7 @@
 
 namespace wali
 {
-  struct LessThan : std::binary_function<const wfa::ITrans*, const wfa::ITrans*, bool>
+  struct LessThan : std::function<bool(const wfa::ITrans*, const wfa::ITrans*)>
   {
     bool operator()( const wfa::ITrans* a, const wfa::ITrans* b ) const
     {
