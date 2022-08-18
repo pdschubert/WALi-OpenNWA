@@ -10,8 +10,8 @@
 
 #include <boost/pending/disjoint_sets.hpp>
 #include <boost/property_map/property_map.hpp>
-#include <boost/unordered_set.hpp>
-#include <boost/unordered_map.hpp>
+#include <unordered_set>
+#include <unordered_map>
 
 
 namespace wali
@@ -29,17 +29,17 @@ namespace details
   // Implementation of Equivalence partition using disjoint-sets. 
   class Partition
   {
-    typedef boost::unordered_map<int, std::size_t> rank_t;
-    typedef boost::unordered_map<int, int> parent_t;
+    typedef std::unordered_map<int, std::size_t> rank_t;
+    typedef std::unordered_map<int, int> parent_t;
 
-    typedef boost::unordered_set<int> elements_t;
+    typedef std::unordered_set<int> elements_t;
 
     typedef boost::associative_property_map<rank_t> rank_p_t;
     typedef boost::associative_property_map<parent_t> parent_p_t;
 
     typedef boost::disjoint_sets<rank_p_t, parent_p_t> DisjointSets;
 
-    typedef boost::unordered_map<int, std::list<int> > root_set_map_t;
+    typedef std::unordered_map<int, std::list<int> > root_set_map_t;
 
   private:
     mutable rank_t rank_; // Data structure to store rank.
@@ -90,7 +90,7 @@ namespace details
     }
 
     // Return the set of elements in partition
-    boost::unordered_set<int> Elements() const
+    std::unordered_set<int> Elements() const
     {
       return elements_;
     }

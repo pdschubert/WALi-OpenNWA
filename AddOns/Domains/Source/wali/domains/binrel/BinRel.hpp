@@ -26,8 +26,8 @@
 #include <vector>
 
 #include <boost/shared_ptr.hpp> // It'd be nice to include the standard version but there are too many ways to get it.
-#include <boost/unordered_set.hpp>
-#include <boost/unordered_map.hpp>
+#include <unordered_set>
+#include <unordered_map>
 #include <boost/function.hpp>
 
 #include "wali/wfa/WeightMaker.hpp"
@@ -501,9 +501,9 @@ namespace wali
         private:
           //TODO: Cleanup in the destructor for all these
           typedef std::pair< unsigned, bdd > StateTranslationKey;
-          typedef boost::unordered_map< StateTranslationKey, opennwa::State > StateTranslationTable; 
+          typedef std::unordered_map< StateTranslationKey, opennwa::State > StateTranslationTable;
           typedef std::vector< std::vector< opennwa::State > > LevelToStatesTable;
-          typedef boost::unordered_set< opennwa::State > StateHashSet;
+          typedef std::unordered_set< opennwa::State > StateHashSet;
           // Maps etc needed during detensor operation
           // We don't store the Nwa here because we don't have the complete type of DetensorNwa yet
           // Same goes for wali::domains::binrel::DetensorWeightGen

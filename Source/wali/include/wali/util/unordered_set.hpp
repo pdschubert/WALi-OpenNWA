@@ -1,10 +1,10 @@
 #ifndef WALI_UTIL_UNORDERED_SET_HPP
 #define WALI_UTIL_UNORDERED_SET_HPP
 
-#include <boost/unordered_set.hpp>
+#include <unordered_set>
 namespace wali {
     namespace util {
-        using boost::unordered_set;
+        using std::unordered_set;
         using std::hash;
     }
 }
