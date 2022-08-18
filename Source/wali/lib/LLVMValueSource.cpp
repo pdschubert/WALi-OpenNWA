@@ -4,11 +4,13 @@
  */
 
 #include <functional>
+
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/IR/Value.h"
+
 #include "wali/Common.hpp"
 #include "wali/LLVMValueSource.hpp"
 #include "wali/hm_hash.hpp"
-#include <llvm/Support/raw_ostream.h>
-#include <llvm/IR/Value.h>
 
 namespace wali
 {

@@ -39,11 +39,11 @@ namespace wali {
             Key src, tgt, stack;
             Transition() : src(0), tgt(0), stack(0) {}
             Transition(Key s, Key st, Key t) : src(s), tgt(t), stack(st) {}
-            Transition(const Transition &t) : src(t.src), tgt(t.tgt), stack(t.stack) {}
+            Transition(const Transition &t) = default;
             Transition(const wali::wfa::ITrans& t ) : src(t.from()), tgt(t.to()), stack(t.stack()) {}
             bool operator == (const Transition &t) {
                 return (src == t.src && tgt == t.tgt && stack == t.stack);
-            }    
+            }
         };
 
         struct TransitionCmp {
@@ -77,7 +77,7 @@ namespace wali {
 #ifdef _WIN32
 #define WIN(stmt) do { if(1) { stmt; } }while(0)
 #else
-#define WIN(stmt) 
+#define WIN(stmt)
 #endif
 
 #ifdef DEBUG
@@ -93,7 +93,7 @@ namespace wali {
 #endif
 
 #define FWPDS_STATS 1
-#ifdef FWPDS_STATS 
+#ifdef FWPDS_STATS
 #define STAT(stmt) do { if(1) { stmt; } }while(0)
 #else
 #define STAT(stmt)

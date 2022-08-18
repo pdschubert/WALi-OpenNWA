@@ -50,9 +50,9 @@ namespace wali {
             public:
               /**
                * The context in which the regular expressions are to be generated.
-               * IntraGraphEdge does not own this. 
+               * IntraGraphEdge does not own this.
                **/
-                RegExpDag * dag;         
+                RegExpDag * dag;
 
                 int src, tgt;
                 sem_elem_t weight;
@@ -61,7 +61,7 @@ namespace wali {
                 functional_t exp;
                 reg_exp_t regexp;
                 IntraGraphEdge(RegExpDag * d, int s, int t, sem_elem_t w, bool u, int uno = 0, functional_t e = NULL) : dag(d), src(s), tgt(t), weight(w), updatable(u), updatable_no(uno), exp(e) {
-                    if(updatable) 
+                    if(updatable)
                         regexp = dag->updatable(uno, weight);
                     else
                         regexp = dag->constant(weight);
@@ -73,22 +73,13 @@ namespace wali {
                     updatable = u;
                     updatable_no = uno;
                     exp = e;
-                    if(updatable) 
+                    if(updatable)
                         regexp = dag->updatable(uno, weight);
                     else
                         regexp = dag->constant(weight);
                 }
                 IntraGraphEdge(RegExpDag * d) : dag(d), src(-1), tgt(-1) { } // creates a fake edge
-                IntraGraphEdge(const IntraGraphEdge &e) {
-                    dag = e.dag;
-                    src = e.src;
-                    tgt = e.tgt;
-                    weight = e.weight;
-                    updatable = e.updatable;
-                    updatable_no = e.updatable_no;
-                    exp = e.exp;
-                    regexp = e.regexp;
-                }
+                IntraGraphEdge(const IntraGraphEdge &e) = default;
 
                 // This marks the currently held regexp as labelling an edge.
                 // Used by RegExpDag to collect the set of regexp nodes that label edges.
@@ -117,9 +108,9 @@ namespace wali {
             public:
               /**
                * The context in which the regular expressions are to be generated.
-               * IntraGraphNode does not own this. 
+               * IntraGraphNode does not own this.
                **/
-                RegExpDag * dag;         
+                RegExpDag * dag;
                 Transition trans;
                 int node_no; // Node number in the IntraGraph node array (-1 if not in the array)
                 node_type type;
@@ -131,16 +122,11 @@ namespace wali {
                 int visited;
                 int scc_number;
                 sem_elem_t weight;
-                std::set<int> dependentEdges; 
+                std::set<int> dependentEdges;
 
                 IntraGraphNode(RegExpDag * d) : dag(d), trans(0,0,0), node_no(-1), type(None), weight(NULL){ } // creates a fake node
                 IntraGraphNode(RegExpDag * d, int nno, node_type ty = None) : dag(d), trans(0,0,0), node_no(nno), type(ty), iscutset(false), visited(0), scc_number(0), weight(NULL) {}
-                IntraGraphNode(const IntraGraphNode &n) : dag(n.dag), trans(n.trans), node_no(n.node_no), type(n.type), outgoing(n.outgoing), incoming(n.incoming), 
-                regexp(n.regexp), iscutset(n.iscutset), visited(n.visited), scc_number(n.scc_number), weight(n.weight) 
-                {
-                  for(std::set<int>::const_iterator iter = n.dependentEdges.begin(); iter != n.dependentEdges.end(); ++iter)
-                    dependentEdges.insert(*iter);
-                }
+                IntraGraphNode(const IntraGraphNode &n) = default;
                 void set(int nno, node_type ty = None) {
                     trans = Transition(0,0,0);
                     node_no = nno;
@@ -187,7 +173,7 @@ namespace wali {
             private:
 
             /**
-             * Under the mixed strategy of Newton method for saturation, 
+             * Under the mixed strategy of Newton method for saturation,
              * is this graph labelled with tensored weights?
              **/
             bool hasTensoredWeights;
@@ -266,10 +252,10 @@ namespace wali {
                 return out;
             }
             public:
-            IntraGraph(RegExpDag * d, bool pre, sem_elem_t _se, SharedMemBuffer * m = NULL) : 
+            IntraGraph(RegExpDag * d, bool pre, sem_elem_t _se, SharedMemBuffer * m = NULL) :
               hasTensoredWeights(false),
-              dag(d), 
-              nodes(50, IntraGraphNode(dag)),  
+              dag(d),
+              nodes(50, IntraGraphNode(dag)),
               edges(50, IntraGraphEdge(dag)),
               memBuf(m)
             {
@@ -314,7 +300,7 @@ namespace wali {
                 Transition t(0,0,0);
                 return makeNode(t);
             }
-            
+
             // @return The index of the newly created / existing edge.
             int addEdge(int src, int tgt, sem_elem_t se, bool updatable = false, functional_t e = NULL);
             void setSource(int t, sem_elem_t se);
@@ -326,7 +312,7 @@ namespace wali {
             void updateWeight(int node, int uno);
             void assignUpdates();
             void clearUpdates();
-             
+
 
             bool updateEdgeWeight(int src, int tgt, sem_elem_t se);
             sem_elem_t readEdgeWeight(int src, int tgt);
@@ -344,7 +330,7 @@ namespace wali {
              * Newton saturation.
              * @see setupNewtonSolution.
              * When using Newton's method for poststar, each IntraGraph corresponds to a linearized system of equations.
-             * Solve this system by iterating through Newton rounds. 
+             * Solve this system by iterating through Newton rounds.
              **/
             void saturate(unsigned& numRounds);
 
@@ -371,7 +357,7 @@ namespace wali {
             void basicRegExp(bool compress_regexp);
             int *computeDominators(vector<IntraGraphNode> &cnodes, int, vector<IntraGraphEdge> &cedges, int, int *buffer, set<int> *bucket_buffer);
             void dfsDominators(vector<IntraGraphNode> &cnodes, vector<IntraGraphEdge> &cedges, int v, int *parent, int *semi, int *vertex, int &n);
-            void setupDomRegExp(vector<IntraGraphNode> &cnodes, int, vector<IntraGraphEdge> &cedges, int, 
+            void setupDomRegExp(vector<IntraGraphNode> &cnodes, int, vector<IntraGraphEdge> &cedges, int,
                     int *dom, int *number, int *vertex, int *tree, set<int> *children);
             void numberNodes(int v, int *number, int *vertex, set<int> *children, int &count);
             void compress_and_sequence(vector<IntraGraphNode> &cnodes, vector<IntraGraphEdge> &cedges,
@@ -388,7 +374,7 @@ namespace wali {
 
             void solveRegSummarySolution();
             void preSolveRegSummarySolution();
-            
+
             /**
              * @see RegExpDag
              * mark the regular expression nodes that labels the nodes in this IntraGraph as being 'useful'.

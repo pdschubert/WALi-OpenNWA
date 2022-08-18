@@ -1,6 +1,8 @@
 #include "wali/graph/Functional.hpp"
 #include "wali/graph/IntraGraph.hpp"
 
+#include "llvm/Support/ErrorHandling.h"
+
 #include <boost/cast.hpp>
 
 using namespace wali;
@@ -123,7 +125,7 @@ sem_elem_tensor_t SemElemFunctional::evaluate(IntraGraph * const gr)
        val = lhs->evaluate(gr);
        return boost::polymorphic_downcast<SemElemTensor*>(val->transpose().get_ptr());
     default:
-      assert(false && "[SemElemFunctiona::evaluate] Unknown case\n");
+      llvm_unreachable("[SemElemFunctiona::evaluate] Unknown case\n");
   }
 }
 
