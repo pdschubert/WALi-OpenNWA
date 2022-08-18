@@ -1,7 +1,6 @@
 #include "wali/domains/RepresentativeString.hpp"
 
 #include <utility>
-#include <boost/functional/hash.hpp>
 
 namespace wali {
   namespace domains {
@@ -105,7 +104,7 @@ namespace wali {
     size_t RepresentativeString::hash() const
     {
       if (_value) {
-        boost::hash<std::string> hasher;
+        std::hash<std::string> hasher;
         return hasher(*_value);
       }
       // A random number. (Not kidding: I got it from random.org!)
